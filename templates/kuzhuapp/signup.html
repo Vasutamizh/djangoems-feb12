@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br><br>    
+<div class="container"> 
+<div class="row">
+    <div class="col-6">
+        <h1>Account Creation Form</h1>
+        <form method="POST">
+            {%csrf_token%}
+            {{form|crispy}}
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="/media/{{member.Image}}" class="img-fluid" alt="Member Image">
+            </div>
+            <div class="col-md-8">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Loan:</th>
+                            <td>{{member.Loanamount}}</td>
+                        </tr>
+                        <tr>
+                            <th>Age:</th>
+                            <td>{{member.Age}}</td>
+                        </tr>
+                        <tr>
+                            <th>Aadhaar Number:</th>
+                            <td>{{member.Aadhaarnumber}}</td>
+                        </tr>
+                        <tr>
+                            <th>PAN Number:</th>
+                            <td>{{member.Pannumber}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <a class="btn btn-primary" href="/addemi/{{member.id}}">Add EMI +</a>
+                    <a class="btn btn-warning" href="/updatemember/{{member.id}}">Edit Details</a>
+                    <a class="btn btn-danger" onclick="confirmDelete()" href="/delete/{{member.id}}" id="btndelete">Delete Member</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <br><hr>
+  <div class="">
+    {% if emi %}
+    <h1>EMI List</h1>
+    <small>Emi</small>
+    <br>
+ <table class="table" >
+<tr>
+    <th>EMI DATE</th>
+    <th>REPAY AMOUNT</th>
+    <th>INTREST</th>
+    <th>SAVINGS AMOUNT</th>
+    <th>SANDHA</th>
+</tr>
+{% for e in emi %}
+<tr>
+    <td>{{e.mon}}</td>
+    <td>{{e.repay}}</td>
+    <td>{{e.Intrest}}</td>
+    <td>{{e.Savings}}</td>
+    <td>{{e.Sandha}}</td>
+</tr>
+{% endfor %}
+ </table>
+ <hr>
+ {%else%}
+ <h1>No EMI Were Found !</h1>
+   {% endif %}
+</div>
+  </div>
+</div>
+  <script>
+   function confirmDelete() {
+    if (confirm("Are you sure you want to delete this item?")) {
+        document.getElementById("deleteForm").submit();
+    }
+}
+  </script>
+{% endblock %}

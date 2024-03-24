@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h3 class="text-primary">Available Amount:</h3>
+    <h4 id="amount" class="text-danger">{{amount}}</h4>
+<br><br>
+<div class="row">
+  <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+    <img src="{% static 'loan.jpg' %}" class="image-fluid">
+  </div>
+  <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+    <form method="post" id="myForm">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input type="submit" value="Give Loan" class="btn btn-success">
+    </form>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+  const amountElement = document.getElementById("amount");
+  const amountValue = parseFloat(amountElement.innerText);
+  const formelement = document.getElementById("myForm");
+  console.log(formelement);
+  console.log({{amount}});
+  if ({{amount}}<1){
+    disableForm(formelement)
+  }
+  function disableForm(form) {
+    var inputs = form.getElementsByTagName("input");
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = true;
+    }
+}
+</script>
+{% endblock %}

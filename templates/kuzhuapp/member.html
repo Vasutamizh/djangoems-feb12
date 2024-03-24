@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+  {% endfor %}
+  {% endif %}
+</div>
+<div class="container">
+  <div class="row">
+    <h3 align=center>Member list</h3>
+    {% if member %}
+      {% for i in member %}
+      <div class="col-lg-3 col-md-4 col-sm-6 col-12" style="margin:10px;">
+      <div class="card" style="width:15rem;" >
+      <img src='/media/{{i.Image}}' class="card-img-top" alt="pic">
+        <div class="card-body">
+          <h5 class="card-title">{{i.Name}}</h5>
+          <a href="/memberdashboard/{{i.id}}" class="btn btn-primary">View Member Details</a>
+        </div>
+     </div>
+     </div>
+    {% endfor %}
+    {% else %}
+    <h1>No Member were found !</h1>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
