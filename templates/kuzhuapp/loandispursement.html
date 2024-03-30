@@ -2,13 +2,18 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
+<style>
+    img{
+        hieight
+    }
+</style>
 <div class="container">
     <h3 class="text-primary">Available Amount:</h3>
     <h4 id="amount" class="text-danger">{{amount}}</h4>
 <br><br>
 <div class="row">
   <div class="col-lg-6 col-md-12 col-sm-12 col-12">
-    <img src="{% static 'loan.jpg' %}" class="image-fluid">
+    <img src="{% static 'loan.jpg' %}" class="container-fluid">
   </div>
   <div class="col-lg-6 col-md-12 col-sm-12 col-12">
     <form method="post" id="myForm">

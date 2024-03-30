@@ -42,6 +42,17 @@ class Emi(models.Model):
         return f"{self.mem}-{self.mon}"
 
 
+class Group(models.Model):
+    repay  = models.IntegerField()
+    intrest = models.IntegerField()
+    savings = models.IntegerField()
+    sandha = models.IntegerField()
+    total = models.IntegerField()
+    mon = models.DateField(auto_now=True)
+
+
+    def __str__(self):
+        return self.amount
 
 class Loan(models.Model):
     mem = models.ForeignKey(Member,null=True, on_delete=models.SET_NULL)

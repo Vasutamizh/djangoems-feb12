@@ -2,15 +2,24 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-
-<div class="container">
+<style>
+    a{
+        margin:10px;
+    }
+    img{
+        height:200px;
+        width:200px;
+    }
+</style>
+<br>
+<div class="container p-2">
   <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <img src="/media/{{member.Image}}" class="img-fluid" alt="Member Image">
             </div>
-            <div class="col-md-8">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <table class="table">
                     <tbody>
                         <tr>
@@ -31,16 +40,18 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="text-center">
-                    <a class="btn btn-primary" href="/addemi/{{member.id}}">Add EMI +</a>
-                    <a class="btn btn-warning" href="/updatemember/{{member.id}}">Edit Details</a>
-                    <a class="btn btn-danger" onclick="confirmDelete()" href="/delete/{{member.id}}" id="btndelete">Delete Member</a>
-                </div>
+
             </div>
         </div>
+
     </div>
 </div>
-  <br><hr>
+            <div>
+            <a class="btn btn-primary" href="/addemi/{{member.id}}">Add EMI +</a>
+            <a class="btn btn-warning" href="/updatemember/{{member.id}}">Edit Details</a>
+            <a class="btn btn-danger" onclick="confirmDelete()" href="/delete/{{member.id}}" id="btndelete">Delete Member</a>
+            </div>
+ <hr>
   <div class="">
     {% if emi %}
     <h1>EMI List</h1>

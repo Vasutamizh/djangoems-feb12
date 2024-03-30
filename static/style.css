@@ -2,11 +2,8 @@
     width: 100%;
     margin: 20px;
 }
-:root{
-    --bg-color:black
-}
 .logincontainer{
-    
+
     margin: 5px;
     padding: 20px;
     width: 40%;

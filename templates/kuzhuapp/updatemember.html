@@ -2,21 +2,33 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-    <div class="container p-5">
-        <h1>Member Update Form</h1>
+<style>
+    li{
+        display:inline;
+    }
+</style>
+    <div class="container">
+        <h1>Member Update Form - <h1 id="Name"></h1></h1>
         <div class="row">
-            <div class="col-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+               <img src='{% static "update.jpg" %}' class="container-fluid" alt="Picture">
+               </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{form|crispy}}
-                    <input type="submit" class="btn btn-success" value="Submit">
-                </form> 
-            </div>
-            <div class="col-6">
-                <img src="{% static 'update.jpg' %}" class="image-fluid" alt="">
+                    <li><input type="submit" class="btn btn-success" value="Submit"></li>
+                    <li><a class="btn btn-secondary" href="/memberdashboard/{{id}}">Dashboard</a></li>
+                    <li><a class="btn btn-secondary" href="/">Home</a></li>
+                </form>
+                <br>
             </div>
         </div>
-        
     </div>
+<script>
+    var mem_name = document.getElementById("id_Name")
+    var Name = document.getElementById("Name")
+    Name.innerHTML = mem_name.value
+</script>
 
 {% endblock %}

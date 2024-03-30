@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
-from .models import Member,Emi,Loan
+from .models import Member,Emi,Loan, Group
 from .forms import MemberForm,EmiForm,Emiform,Loanform,Signupform, Loginform
 from django.utils.cache import patch_cache_control
 from django.shortcuts import get_object_or_404
-from django.db.models  import Avg,Sum,Count
+from django.db.models  import Sum,Count
 from datetime import date
+from Kuzhu_project import settings
 
 
 def home(request):
@@ -20,7 +21,7 @@ def home(request):
         return render(request, "kuzhuapp/home.html", context={"tt":template_tag,"member":member_count,"loanamount":loanamount,"total_emi":total_emi,"intrest":intrest})
     except:
         return render(request, "kuzhuapp/home.html")
-    
+
 
 def signup(request):
     form = Signupform()
@@ -35,7 +36,7 @@ def signup(request):
             response = render(request, "kuzhuapp/signup.html" , context={"form":form})
             patch_cache_control(response, no_store=True)
             return response
-        
+
 
     response = render(request, "kuzhuapp/signup.html" , context={"form":form})
     patch_cache_control(response, no_store=True)
@@ -59,11 +60,11 @@ def loginview(request):
             response = render(request, "kuzhuapp/login.html", context={"form":form})
             patch_cache_control(response, no_store=True)
             return response
-        
+
     response = render(request, "kuzhuapp/login.html", context={"form":form})
     patch_cache_control(response, no_store=True)
     return response
-        
+
 
 
 def listmember(request):
@@ -80,10 +81,10 @@ def Addmember(request):
             messages.add_message(request, messages.SUCCESS, 'Member Created Successfully')
             return redirect("home")
         else:
-            response = render(request,'kuzhuapp/Addmember.html',context={"form":form})
+            response = render(request,'kuzhuapp/addmember.html',context={"form":form})
             patch_cache_control(response, no_store=True)
             return response
-    response = render(request,'kuzhuapp/Addmember.html',context={"form":form})
+    response = render(request,'kuzhuapp/addmember.html',context={"form":form})
     patch_cache_control(response, no_store=True)
     return response
 
@@ -95,15 +96,21 @@ def Addemi(request, id):
         form = Emiform(request.POST)
         if form.is_valid():
             amount = form.cleaned_data['repay']
+            intrest = form.cleaned_data['Intrest']
+            savings = form.cleaned_data['Savings']
+            sandha = form.cleaned_data['Sandha']
+            total = amount+intrest+savings+sandha
+            group = Group(repay=amount, intrest=intrest,savings=savings, sandha=sandha, total=total)
+            group.save()
             member.Loanamount = int(member.Loanamount)-amount
             member.save()
             form.save()
             messages.add_message(request, messages.SUCCESS, 'Emi Added Successfully')
             return redirect("/members/")
         else:
-            context = {"form":form}
+            context = {"form":form, "id":id}
             return render(request, "kuzhuapp/addemi.html",context)
-    response = render(request,'kuzhuapp/addemi.html',context={"form":form,"member":member})
+    response = render(request,'kuzhuapp/addemi.html',context={"form":form,"member":member,"id":id})
     patch_cache_control(response, no_store=True)
     return response
 
@@ -119,11 +126,11 @@ def Updatemember(request,id):
             return redirect("home")
         else:
             form =  MemberForm(request.POST, request.FILES)
-            response = render(request,'kuzhuapp/updatemember.html',context={"form":form})
+            response = render(request,'kuzhuapp/updatemember.html',context={"form":form, "id":id})
             patch_cache_control(response, no_store=True)
             return response
 
-    response = render(request,'kuzhuapp/updatemember.html',context={"form":form})
+    response = render(request,'kuzhuapp/updatemember.html',context={"form":form, "id":id})
     patch_cache_control(response, no_store=True)
     return response
 
@@ -141,31 +148,34 @@ def Memberdashboard(request,id):
 
 
 def loandispurse(request):
-    total_amount = Emi.objects.filter(mon=date.today()).aggregate(repay=Sum("repay"),intrest=Sum("Intrest"),savings=Sum("Savings"),sandha=Sum("Sandha"))
     try:
-        if total_amount:
-            amount = total_amount['repay']+total_amount['intrest']+total_amount['intrest']+total_amount['savings']+total_amount['sandha']
+        group = Group.objects.filter(mon=date.today()).first()
+        total = group.total
     except:
-        amount = 0
+        total = 0
+
     form = Loanform()
     if request.method == "POST":
         form = Loanform(request.POST)
         if form.is_valid():
-            mem = form.cleaned_data['member']
+            mem = form.cleaned_data['mem']
             loan = form.cleaned_data['loan']
             member = Member.objects.get(pk=mem.id)
             member.Loanamount += loan
-            amount -= loan
+            if total > 0:
+                group.total = total -loan
+                group.save()
             member.save()
             form.save()
             return redirect('/loandispurse/')
         else:
-            response = render(request,'kuzhuapp/loandispursement.html',context={"form":form, "amount":amount})
+            form = Loanform(request.POST)
+            response = render(request,'kuzhuapp/loandispursement.html',context={"form":form, "amount":total})
             patch_cache_control(response, no_store=True)
             return response
 
     else:
-        response = render(request,'kuzhuapp/loandispursement.html',context={"form":form, "amount":amount})
+        response = render(request,'kuzhuapp/loandispursement.html',context={"form":form, "amount":total})
         patch_cache_control(response, no_store=True)
         return response
 

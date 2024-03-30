@@ -10,7 +10,10 @@
 <div class="container" >
     <h1>Monthly Turn Of Repayment - {{member.Name}}</h1>
     <div class="row">
-      <div class="col-6">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+          <img src="{% static 'emi.jpg' %}" class="container-fluid" alt="">
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-12">
         <div>
           <form  method="post" id="myForm">
             {% csrf_token %}
@@ -22,14 +25,14 @@
           <hr>
         </div>
       </div>
-      <div class="col-6">
-          <img src="{% static 'emi.jpg' %}" class="container-fluid" alt="">
-      </div>
     </div>
-    
+
 
 </div>
 <script type="text/javascript">
+var intrest = document.getElementById("id_Intrest")
+var val = Math.round({{member.Loanamount}}/100*0.0833333333334*36)
+intrest.value = val
   // Get reference to the number input field
 var numberInput = document.getElementById('id_repay');
 // Add input event listener to the number input field
@@ -41,7 +44,7 @@ function validateNumber() {
     var maxNumber = Number("{{member.Loanamount}}"); // Change this to your desired maximum number
     if (isNaN(inputValue)) {
         numberInput.setCustomValidity('Please enter a valid number');
-    } else if (inputValue >= maxNumber) {
+    } else if (inputValue > maxNumber) {
         numberInput.setCustomValidity('Number must be less than ' + maxNumber);
         console.log("True")
     } else {

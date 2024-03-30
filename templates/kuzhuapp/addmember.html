@@ -2,21 +2,28 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
+<style>
+    li{
+        display:inline;
+    }
+</style>
 <div class="container p-5" >
     <h1>Member Creation Form</h1>
 <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+    <img src="{% static 'create.jpg' %}" class="side-image" alt="">
+  </div>
   <div class="col-lg-6 col-md-6 col-sm-12 col-12">
     <div>
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Create Member" class="btn btn-primary">
+        <li><input type="submit" value="Create Member" class="btn btn-success"></li>
+        <li><a class="btn btn-secondary" href="/">Home</a></li>
       </form>
     </div>
   </div>
-  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-    <img src="{% static 'create.jpg' %}" class="side-image" alt="">
-  </div>
+
 </div>
 </div>
 {% endblock %}
