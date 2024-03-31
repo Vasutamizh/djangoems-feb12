@@ -2,26 +2,22 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <br>
-<div class="container">
-    {% if messages %}
-    {% for message in  messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-       {{message}}
-     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <form method="post">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <input type="checkbox" onclick="showpassword()"> Show Password <br><br>
+                    <input type="submit" class="btn btn-outline-success" value="Login !">
+                    <a href="/signup/">New User? Create Account</a>
+                </form>
+            </div>
+        </div>
     </div>
-    {% endfor %}
-    {% endif %}
-    
-    <form method="post">
-        {% csrf_token %}
-        {{form|crispy}}
-        <input type="submit" class="btnsubmit" value="Login !">
-        <a href="#">New User ? Create Account</a>
-    </form>
-</div>
 <script>
     function showpassword(){
-        var pwd = document.getElementById("id_Password");
+        var pwd = document.getElementById("id_password");
         console.log(pwd)
         if (pwd.type === 'password'){
             pwd.type = 'text';

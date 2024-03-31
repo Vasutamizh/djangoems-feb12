@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a(45ug#5*0t1=$&#6%$9lwjt(gsgkodnu2epn76p3(hh&q4x=e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['yourfriend.pythonanywhere.com']
-
+#ALLOWED_HOSTS = ['yourfriend.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -126,15 +126,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/yourfriend/djangoems-feb12/media/'
+LOGIN_REDIRECT_URL = "/"
 
+
+MEDIA_URL = '/media/'
+#MEDIA_ROOT = '/home/yourfriend/djangoems-feb12/media/'
+MEDIA_ROOT = BASE_DIR/ 'media'
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = "/home/yourfriend/djangoems-feb12/static/"
+#STATIC_ROOT = "/home/yourfriend/djangoems-feb12/static/"
 
-STATICFILES_DIRS = ['/home/yourfriend/djangoems-feb12/static/']
+#STATICFILES_DIRS = ['/home/yourfriend/djangoems-feb12/static/']
+
+STATICFILES_DIRS = [BASE_DIR/'static']
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

@@ -40,47 +40,44 @@
                         </tr>
                     </tbody>
                 </table>
-
             </div>
         </div>
-
     </div>
 </div>
-            <div>
-            <a class="btn btn-primary" href="/addemi/{{member.id}}">Add EMI +</a>
-            <a class="btn btn-warning" href="/updatemember/{{member.id}}">Edit Details</a>
-            <a class="btn btn-danger" onclick="confirmDelete()" href="/delete/{{member.id}}" id="btndelete">Delete Member</a>
-            </div>
- <hr>
-  <div class="">
+    <div>
+        <a class="btn btn-primary" href="/addemi/{{member.id}}">Add EMI +</a>
+        <a class="btn btn-warning" href="/updatemember/{{member.id}}">Edit Details</a>
+        <a class="btn btn-danger" onclick="confirmDelete()" href="/delete/{{member.id}}" id="btndelete">Delete Member</a>
+    </div>
+    <hr>
+    <div class="">
     {% if emi %}
-    <h1>EMI List</h1>
-    <small>Emi</small>
-    <br>
- <table class="table" >
-<tr>
-    <th>EMI DATE</th>
-    <th>REPAY AMOUNT</th>
-    <th>INTREST</th>
-    <th>SAVINGS AMOUNT</th>
-    <th>SANDHA</th>
-</tr>
-{% for e in emi %}
-<tr>
-    <td>{{e.mon}}</td>
-    <td>{{e.repay}}</td>
-    <td>{{e.Intrest}}</td>
-    <td>{{e.Savings}}</td>
-    <td>{{e.Sandha}}</td>
-</tr>
-{% endfor %}
- </table>
- <hr>
- {%else%}
- <h1>No EMI Were Found !</h1>
-   {% endif %}
-</div>
-  </div>
+        <h1>EMI List</h1>
+        <small>Emi</small>
+        <br>
+    <table class="table" >
+        <tr>
+            <th>EMI DATE</th>
+            <th>REPAY AMOUNT</th>
+            <th>INTREST</th>
+            <th>SAVINGS AMOUNT</th>
+            <th>SANDHA</th>
+        </tr>
+    {% for e in emi %}
+        <tr>
+            <td>{{e.mon}}</td>
+            <td>{{e.repay}}</td>
+            <td>{{e.Intrest}}</td>
+            <td>{{e.Savings}}</td>
+            <td>{{e.Sandha}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <hr>
+    {%else%}
+    <h1>No EMI Were Found !</h1>
+    {% endif %}
+    </div>
 </div>
   <script>
    function confirmDelete() {

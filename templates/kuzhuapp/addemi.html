@@ -7,59 +7,57 @@
     display:inline;
   }
 </style>
-<div class="container" >
-    <h1>Monthly Turn Of Repayment - {{member.Name}}</h1>
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-          <img src="{% static 'emi.jpg' %}" class="container-fluid" alt="">
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-        <div>
-          <form  method="post" id="myForm">
-            {% csrf_token %}
-          {{form|crispy}}
-          <li><input type="submit" class="btn btn-success" value="Add EMI"></li>
-          <li><a href="/" class="btn btn-secondary">Back to Home</a></li>
-          <li><a href="/memberdashboard/{{member.id}}" class="btn btn-secondary">Dashboard</a></li>
-          </form>
-          <hr>
+    <div class="container" >
+        <h1>Monthly Turn Of Repayment - {{member.Name}}</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <img src="{% static 'emi.jpg' %}" class="container-fluid" alt="">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <div>
+                    <form  method="post" id="myForm">
+                      {% csrf_token %}
+                      {{form|crispy}}
+                      <li><input type="submit" class="btn btn-success" value="Add EMI"></li>
+                      <li><a href="/" class="btn btn-secondary">Back to Home</a></li>
+                      <li><a href="/memberdashboard/{{member.id}}" class="btn btn-secondary">Dashboard</a></li>
+                    </form>
+                    <hr>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-
-
-</div>
 <script type="text/javascript">
-var intrest = document.getElementById("id_Intrest")
-var val = Math.round({{member.Loanamount}}/100*0.0833333333334*36)
-intrest.value = val
-  // Get reference to the number input field
-var numberInput = document.getElementById('id_repay');
-// Add input event listener to the number input field
-numberInput.addEventListener('input', validateNumber);
+      var intrest = document.getElementById("id_Intrest")
+      var val = Math.round({{member.Loanamount}}/100*0.0833333333334*36)
+      intrest.value = val
+      // Get reference to the number input field
+      var numberInput = document.getElementById('id_repay');
+      // Add input event listener to the number input field
+      numberInput.addEventListener('input', validateNumber);
 
-function validateNumber() {
-    var inputValue = parseFloat(numberInput.value);
-    // Define the maximum allowed value
-    var maxNumber = Number("{{member.Loanamount}}"); // Change this to your desired maximum number
-    if (isNaN(inputValue)) {
-        numberInput.setCustomValidity('Please enter a valid number');
-    } else if (inputValue > maxNumber) {
-        numberInput.setCustomValidity('Number must be less than ' + maxNumber);
-        console.log("True")
-    } else {
-        numberInput.setCustomValidity('');
-    }
-}
+      function validateNumber() {
+          var inputValue = parseFloat(numberInput.value);
+          // Define the maximum allowed value
+          var maxNumber = Number("{{member.Loanamount}}"); // Change this to your desired maximum number
+          if (isNaN(inputValue)) {
+              numberInput.setCustomValidity('Please enter a valid number');
+          } else if (inputValue > maxNumber) {
+              numberInput.setCustomValidity('Number must be less than ' + maxNumber);
+              console.log("True")
+          } else {
+              numberInput.setCustomValidity('');
+          }
+      }
 
-// Add a submit event listener to the form for final validation
-document.getElementById('myForm').addEventListener('submit', function(event) {
-    if (!this.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    this.classList.add('was-validated');
-});
+      // Add a submit event listener to the form for final validation
+      document.getElementById('myForm').addEventListener('submit', function(event) {
+          if (!this.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+          }
+          this.classList.add('was-validated');
+      });
 
 </script>
 {% endblock %}

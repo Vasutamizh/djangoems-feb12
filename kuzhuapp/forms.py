@@ -2,12 +2,13 @@ from pyexpat import model
 from django import forms
 from .models import Member,Emi,Loan
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
-class Signupform(forms.ModelForm):
+class Signupform(UserCreationForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'password',)
+        fields = ('email','username','password1','password2')
 
 class Loginform(forms.Form):
     Username = forms.CharField(max_length=25,widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Username"}))
